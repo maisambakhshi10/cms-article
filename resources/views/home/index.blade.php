@@ -17,7 +17,7 @@
                      <div class="blog-content">
                          <h4>{{ $article->title }}</h4>
                          <p>{{ Str::limit($article->body, 100) }}</p>
-                         <a href="" class="more-btn">View More</a>
+                         <a href="{{ route('article.show', [$article->id]) }}" class="more-btn">View More</a>
                      </div>
                      <span class="text-muted"> {{ $article->created_at->diffForHumans() }}</span>
                  </div>

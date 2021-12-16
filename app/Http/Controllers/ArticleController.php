@@ -70,7 +70,9 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
-        //
+        return view('home.show', [
+            'article'   =>  $article
+        ]);
     }
 
     /**
@@ -81,7 +83,9 @@ class ArticleController extends Controller
      */
     public function edit(Article $article)
     {
-        //
+        return view('home.edit',[
+            'article'   =>  $article
+        ]);
     }
 
     /**
@@ -91,9 +95,17 @@ class ArticleController extends Controller
      * @param  \App\Models\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Article $article)
+    public function update(StoreArticle $request, $id)
     {
-        //
+        $article = Article::findOrFail($id);
+        $validated = $request->validated();
+
+        $article->fill($validated);
+        $article->save();
+
+        $request->session()->flash('status', 'the article was updated successfully');
+
+        return redirect()->route('article.show', ['article' =>  $article->id]);
     }
 
     /**
@@ -102,8 +114,13 @@ class ArticleController extends Controller
      * @param  \App\Models\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Article $article)
+    public function destroy($id)
     {
-        //
+        $article = Article::findOrFail($id);
+        $article->delete();
+
+        session()->flash('status', 'The post was deleted successfully');
+
+        return redirect()->route('article.index');
     }
 }
