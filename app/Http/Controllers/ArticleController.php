@@ -46,7 +46,7 @@ class ArticleController extends Controller
              $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
              $ext = $request->file('image')->getClientOriginalExtension();
              $fileNameToStore = $fileName . '_'.time().'.'.$ext;
-             $request->file('image')->storeAs('/images', $fileNameToStore);
+             $request->file('image')->storeAs('/public/images', $fileNameToStore);
          }
  
          // store the input requests
@@ -55,6 +55,9 @@ class ArticleController extends Controller
          $article->body = $request->input('body');
          $article->image = $fileNameToStore;
          $article->save();
+
+        // a success status when post is stored successfully
+        $request->session()->flash('status', 'the article was created');
  
          return redirect()->route('article.index');
     }

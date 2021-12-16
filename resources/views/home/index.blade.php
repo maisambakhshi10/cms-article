@@ -12,7 +12,7 @@
         <div class="col-md-4">
             <div class="single-blog-item">
                      <div class="blog-thumnail">
-                         <a href=""><img src="{{ asset('storage/images/'.$article->image) }}" alt="blog-img"></a>
+                         <a href=""><img src="{{ asset('/storage/images/'.$article->image) }}" alt="blog-img"></a>
                      </div>
                      <div class="blog-content">
                          <h4>{{ $article->title }}</h4>
