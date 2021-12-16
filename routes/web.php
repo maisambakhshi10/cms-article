@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect()->route('plant.index');
+    return redirect()->route('article.index');
 });
 
-Route::resource('plant', ArticleController::class);
+Route::resource('article', ArticleController::class);
