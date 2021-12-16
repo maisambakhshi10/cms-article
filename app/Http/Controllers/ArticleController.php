@@ -15,7 +15,9 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        //
+        return view('home.index',[
+            'articles' => Article::all()
+        ]);
     }
 
     /**
@@ -49,9 +51,9 @@ class ArticleController extends Controller
  
          // store the input requests
          $article = new Article();
-         $article->name = $request->input('title');
-         $article->instructions = $request->input('body');
-         $article->imageFile = $fileNameToStore;
+         $article->title = $request->input('title');
+         $article->body = $request->input('body');
+         $article->image = $fileNameToStore;
          $article->save();
  
          return redirect()->route('article.index');
