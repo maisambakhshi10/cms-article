@@ -18,7 +18,7 @@
                     <form class="d-inline" action="{{ route('article.destroy', ['article' =>  $article->id]) }}" method="POST">
                         @csrf
                         @method('DELETE')
-                        <input type="submit" value="detele" class="btn btn-danger">
+                        <input type="submit" value="delete" class="btn btn-danger">
                     </form>
                   </div>
             </div>
