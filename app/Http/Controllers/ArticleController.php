@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreArticle;
 use App\Models\Article;
 use Illuminate\Http\Request;
 
@@ -33,9 +34,27 @@ class ArticleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreArticle $request)
     {
-        ddd($request->all());
+         // validate the incoming requests
+         $request->validated();
+
+         if($request->hasFile('image')) {
+             $fileNameWithExt = $request->file('image')->getClientOriginalName();
+             $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+             $ext = $request->file('image')->getClientOriginalExtension();
+             $fileNameToStore = $fileName . '_'.time().'.'.$ext;
+             $request->file('image')->storeAs('/images', $fileNameToStore);
+         }
+ 
+         // store the input requests
+         $article = new Article();
+         $article->name = $request->input('title');
+         $article->instructions = $request->input('body');
+         $article->imageFile = $fileNameToStore;
+         $article->save();
+ 
+         return redirect()->route('article.index');
     }
 
     /**
